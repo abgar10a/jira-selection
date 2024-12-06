@@ -1,0 +1,38 @@
+modules:
+  jira:customFieldType:
+    - key: dynamic-checkbox-test
+      name: 11Dynamic Checkbox Field
+      description: 11A dynamic custom field with checkboxes
+      type: string
+      validation:
+        expression: value == null || value.every(item => !!item.match(configuration?.regexp || "^[A-Za-z]+$"))
+        errorMessage: One or more selected values are invalid
+      contextConfig:
+        resource: context-config
+        layout: basic
+      edit:
+        resource: edit
+
+  jira:adminPage:
+    - key: configure-page
+      resource: main
+      title: Configure
+      useAsConfig: true
+
+resources:
+  - key: main
+    path: static/configurable-validation/build
+  - key: edit
+    path: static/edit/build
+  - key: context-config
+    path: static/context-config/build
+
+permissions:
+  content:
+    styles:
+      - unsafe-inline
+
+app:
+  id: ari:cloud:ecosystem::app/a746e85a-795e-4be5-9f35-582df6920130
+  runtime:
+    name: nodejs20.x
